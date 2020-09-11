@@ -1,245 +1,267 @@
-swagger: "2.0"
+openapi: 3.0.1
 info:
-  description: "This is a simple api description"
-  version: "1.0.0"
-  title: "weMail Client API"
+  title: weMail Client API
+  description: To find your API key go to `weMail > Settings > API Keys` 
   contact:
-    email: "support@getwemail.io"
-host: "api.getwemail.io"
-basePath: "/api/v1"
-tags: 
-- name: "List"
-- name: "Subscriber"
-- name: "Tag"
-
-schemes:
-- "https"
+    email: support@getwemail.io
+  version: 1.0.0
+servers:
+- url: https://api.getwemail.io/api/v1
+tags:
+- name: List
+- name: Subscriber
+- name: Tag
 paths:
   /lists:
     get:
       tags:
-        - "List"
-      summary: "List of list"
+      - List
+      summary: List of list
       parameters:
-      - in: header
-        name: X-API-KEY
-        type: string
+      - name: X-API-KEY
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  subscribed:
+                    type: string
+                  unsubscribed:
+                    type: string
+                  unconfirmed:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+        401:
+          description: Unauthorized
+          content: {}
+  /lists/{list_id}/subscribers:
+    post:
+      tags:
+      - Subscriber
+      summary: Create a subscriber
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-API-KEY
+        in: header
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              required:
+              - email
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                mobile:
+                  type: string
+                phone:
+                  type: string
+                address1:
+                  type: string
+                address2:
+                  type: string
+                country:
+                  type: string
+                date_of_birth:
+                  type: string
+                  format: date
+                timezone:
+                  type: string
         required: true
       responses:
         200:
           description: OK
-          schema:
-            type: object
-            properties: 
-              id: 
-                type: string
-                format: uuid
-              name:
-                type: string
-              description:
-                type: string
-              subscribed:
-                type: string
-              unsubscribed:
-                type: string
-              unconfirmed:
-                type: string
-              created_at:
-                type: string
-                format: date-time
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  email:
+                    type: string
+                  mobile:
+                    type: string
+                  phone:
+                    type: string
+                  address1:
+                    type: string
+                  address2:
+                    type: string
+                  country:
+                    type: string
+                  date_of_birth:
+                    type: string
+                    format: date
+                  timezone:
+                    type: string
+                  tags:
+                    type: object
+                    properties: {}
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
         401:
           description: Unauthorized
-  /lists/{list_id}/subscribers:
-    post:
-      summary: "Create a subscriber"
-      tags: 
-        - "Subscriber"
-      parameters:
-      - in: path
-        name: list_id
-        type: string
-        required: true
-      - in: header
-        name: X-API-KEY
-        type: string
-        required: true
-      - in: "body"
-        name: "body"
-        required: true
-        schema:
-          type: object
-          properties:
-              first_name:
-                type: string
-              last_name:
-                type: string
-              email:
-                type: string
-              mobile:
-                type: string
-              phone:
-                type: string
-              address1:
-                type: string
-              address2:
-                type: string
-              country:
-                type: string
-              date_of_birth:
-                type: string
-                format: date
-              timezone:
-                type: string
-              tags:
-                type: object
-          required:
-            - email
-
-      responses: 
-        200:
-          description: OK
-          schema:
-            type: object
-            properties: 
-              id: 
-                type: string
-                format: uuid
-              first_name:
-                type: string
-              last_name:
-                type: string
-              email:
-                type: string
-              mobile:
-                type: string
-              phone:
-                type: string
-              address1:
-                type: string
-              address2:
-                type: string
-              country:
-                type: string
-              date_of_birth:
-                type: string
-                format: date
-              timezone:
-                type: string
-              tags:
-                type: object
-              created_at:
-                type: string
-                format: date-time
-              updated_at:
-                type: string
-                format: date-time
-        401:
-          description: Unauthorized
+          content: {}
+      x-codegen-request-body-name: body
   /lists/{list_id}/tags:
     get:
       tags:
-        - "Tag"
-      summary: "Get tag"
-      produces:
-      - "application/json"
+      - Tag
+      summary: Get tag
       parameters:
-      - in: path
-        name: list_id
-        type: string
-        format: uuid
-        required: true
+      - name: list_id
+        in: path
         description: Numeric id of the list.
-      - in: header
-        name: X-API-KEY
-        type: string
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-API-KEY
+        in: header
+        schema:
+          type: string
       responses:
         200:
           description: OK
-          schema:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
     post:
       tags:
-        - "Tag"
-      summary: "Create tag"
-      produces:
-      - "application/json"
+      - Tag
+      summary: Create tag
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Create a tag object"
+      - name: list_id
+        in: path
+        description: Numeric id of the list.
         required: true
         schema:
-          type: object
-          properties:
-            name:
-              type: string
-          required:
-            - name
-      - in: path
-        name: list_id
-        type: integer
+          type: integer
+      - name: X-API-KEY
+        in: header
+        schema:
+          type: string
+      requestBody:
+        description: Create a tag object
+        content:
+          '*/*':
+            schema:
+              required:
+              - name
+              type: object
+              properties:
+                name:
+                  type: string
         required: true
-        description: Numeric id of the list.
-      - in: header
-        name: X-API-KEY
-        type: string
       responses:
         default:
-          description: "successful operation"
+          description: successful operation
+          content: {}
+      x-codegen-request-body-name: body
   /tags/{tag_id}:
     put:
       tags:
-        - "Tag"
-      summary: "Update tag"
+      - Tag
+      summary: Update tag
       parameters:
-      - in: path
-        name: tag_id
-        type: integer
-        required: true
-      - in: header
-        name: X-API-KEY
-        type: string
-      - in: "body"
-        name: "body"
-        description: "Update a tag object"
+      - name: tag_id
+        in: path
         required: true
         schema:
-          type: object
-          properties:
-            name:
-              type: string
-          required:
-            - name
+          type: integer
+      - name: X-API-KEY
+        in: header
+        schema:
+          type: string
+      requestBody:
+        description: Update a tag object
+        content:
+          '*/*':
+            schema:
+              required:
+              - name
+              type: object
+              properties:
+                name:
+                  type: string
+        required: true
       responses:
         200:
           description: OK
-          schema:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+      x-codegen-request-body-name: body
     delete:
       tags:
-        - "Tag"
-      summary: "Delete tag"
+      - Tag
+      summary: Delete tag
       parameters:
-      - in: path
-        name: tag_id
-        type: integer
-        required: true
+      - name: tag_id
+        in: path
         description: Numeric id of the tag.
-      - in: header
-        name: X-API-KEY
-        type: string
+        required: true
+        schema:
+          type: integer
+      - name: X-API-KEY
+        in: header
+        schema:
+          type: string
       responses:
         200:
           description: OK
-          schema:
-            type: object
+          content:
+            '*/*':
+              schema:
+                type: object
+components: {}
