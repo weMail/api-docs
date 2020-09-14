@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: weMail Client API
-  description: To find your API key go to `weMail > Settings > API Keys` 
+  description: To find your API key go to `weMail > Settings > API Keys` on your WordPress dashboard.
   contact:
     email: support@getwemail.io
   version: 1.0.0
@@ -95,6 +95,11 @@ paths:
                   format: date
                 timezone:
                   type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+                    description: Tag UUID
         required: true
       responses:
         200:
@@ -129,8 +134,9 @@ paths:
                   timezone:
                     type: string
                   tags:
-                    type: object
-                    properties: {}
+                    type: array
+                    items:
+                      type: object
                   created_at:
                     type: string
                     format: date-time
@@ -167,7 +173,8 @@ paths:
                 type: object
                 properties:
                   id:
-                    type: integer
+                    type: string
+                    format: uuid
                   name:
                     type: string
     post:
@@ -198,6 +205,18 @@ paths:
                   type: string
         required: true
       responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
         default:
           description: successful operation
           content: {}
@@ -238,7 +257,8 @@ paths:
                 type: object
                 properties:
                   id:
-                    type: integer
+                    type: string
+                    format: uuid
                   name:
                     type: string
       x-codegen-request-body-name: body
@@ -264,4 +284,3 @@ paths:
             '*/*':
               schema:
                 type: object
-components: {}
