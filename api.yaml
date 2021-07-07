@@ -147,6 +147,44 @@ paths:
           description: Unauthorized
           content: {}
       x-codegen-request-body-name: body
+
+  /lists/{list_id}/subscribers/{subscriber_id}:
+    delete:
+      tags:
+        - Subscriber
+      summary: Remove a subscriber from a list
+      parameters:
+        - name: list_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subscriber_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        403:
+          description: Unauthorized
+          content: { }
+      x-codegen-request-body-name: body
+
   /lists/{list_id}/tags:
     get:
       tags:
