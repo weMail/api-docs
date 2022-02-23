@@ -1,0 +1,22 @@
+{
+  "name": "api-docs",
+  "version": "1.0.0",
+  "description": "weMail Client API Documentation",
+  "scripts": {
+    "dev": "browser-sync start --files api.yaml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weMail/api-docs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/weMail/api-docs/issues"
+  },
+  "homepage": "https://github.com/weMail/api-docs#readme",
+  "devDependencies": {
+    "browser-sync": "^2.27.7"
+  }
+}

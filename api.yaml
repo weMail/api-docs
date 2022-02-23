@@ -27,7 +27,7 @@ paths:
         200:
           description: OK
           content:
-            '*/*':
+            'application/json':
               schema:
                 type: object
                 properties:
@@ -68,7 +68,7 @@ paths:
           type: string
       requestBody:
         content:
-          '*/*':
+          'application/json':
             schema:
               required:
               - email
@@ -105,7 +105,7 @@ paths:
         200:
           description: OK
           content:
-            '*/*':
+            'application/json':
               schema:
                 type: object
                 properties:
@@ -174,12 +174,120 @@ paths:
         200:
           description: OK
           content:
-            '*/*':
+            'application/json':
               schema:
                 type: object
                 properties:
                   message:
                     type: string
+        403:
+          description: Unauthorized
+          content: { }
+      x-codegen-request-body-name: body
+  /lists/{list_id}/subscribers/{subscriber_id}/tags:
+    get:
+      tags:
+        - Subscriber
+      summary: Get the tags on a list subscriber.
+      parameters:
+        - name: list_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique ID for the list.
+
+        - name: subscriber_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The MD5 hash of the lowercase version of the list subscriber's email address.
+
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+
+        403:
+          description: Unauthorized
+          content: { }
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - Subscriber
+      summary: Add or remove tags from a list subscriber. If a tag that does not exist is passed in and set 'use_id = false', a new tag will be created.
+      parameters:
+        - name: list_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique ID for the list.
+
+        - name: subscriber_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The MD5 hash of the lowercase version of the list subscriber's email address.
+
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              required:
+                - tags
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+                    description: Tag UUID or name
+                use_id:
+                  type: boolean
+                  default: true
+                is_sync:
+                  type: boolean
+                  default: false
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
         403:
           description: Unauthorized
           content: { }
@@ -233,7 +341,7 @@ paths:
       requestBody:
         description: Create a tag object
         content:
-          '*/*':
+          'application/json':
             schema:
               required:
               - name
@@ -277,7 +385,7 @@ paths:
       requestBody:
         description: Update a tag object
         content:
-          '*/*':
+          'application/json':
             schema:
               required:
               - name
@@ -319,6 +427,6 @@ paths:
         200:
           description: OK
           content:
-            '*/*':
+            'application/json':
               schema:
                 type: object
