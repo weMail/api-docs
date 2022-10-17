@@ -4,21 +4,6 @@
     <list default="true" id="9e325ddc-3beb-40b5-b6e9-1c15eca45959" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/favicon-16x16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/favicon-32x32.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui-bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/swagger-ui-bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui-bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/js/swagger-ui-bundle.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui-es-bundle-core.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui-es-bundle-core.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui-es-bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui-es-bundle.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui-standalone-preset.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/swagger-ui-standalone-preset.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui-standalone-preset.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/js/swagger-ui-standalone-preset.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/swagger-ui.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/css/swagger-ui.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-ui.js.map" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +15,35 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1666009293" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="develop" />
+                    <option name="lastUsedInstant" value="1666009097" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="gh-pages" />
+                    <option name="lastUsedInstant" value="1666009096" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -53,6 +67,45 @@
       <recent name="$PROJECT_DIR$/js" />
       <recent name="$PROJECT_DIR$/css" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="SwaggerCodegen">
+      <option name="activeConfigurationType" value="FILE" />
+      <option name="configurationPath" value="" />
+      <option name="customJreEnabled" value="false" />
+      <option name="customTemplatesPath" value="" />
+      <option name="enableDebugLogging" value="false" />
+      <option name="generateToPath" value="$PROJECT_DIR$/gen" />
+      <option name="generationParameters">
+        <list />
+      </option>
+      <option name="generatorPath" value="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.0.0/openapi-generator-cli-5.0.0.jar" />
+      <option name="jdkPath" value="Default" />
+      <option name="language" value="java" />
+      <option name="specificationPath" value="$PROJECT_DIR$/api.yaml" />
+      <method v="2" />
+    </configuration>
+    <configuration name="api.yaml" type="SwaggerCodegen" temporary="true">
+      <option name="activeConfigurationType" value="FILE" />
+      <option name="configurationPath" value="" />
+      <option name="customJreEnabled" value="false" />
+      <option name="customTemplatesPath" value="" />
+      <option name="enableDebugLogging" value="false" />
+      <option name="generateToPath" value="$PROJECT_DIR$/gen" />
+      <option name="generationParameters">
+        <list />
+      </option>
+      <option name="generatorPath" value="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.0.0/openapi-generator-cli-5.0.0.jar" />
+      <option name="jdkPath" value="Default" />
+      <option name="language" value="java" />
+      <option name="specificationPath" value="$PROJECT_DIR$/api.yaml" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Swagger Codegen.api.yaml" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -82,5 +135,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
