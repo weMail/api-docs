@@ -295,7 +295,7 @@ paths:
     patch:
       tags:
         - Subscriber
-      summary: Add or remove tags from a list subscriber. If a tag that does not exist is passed in and set 'use_id = false', a new tag will be created.
+      summary: Remove tags from a list subscriber. 'use_id = false', you can provide tag name.
       parameters:
         - name: list_id
           in: path
@@ -333,9 +333,6 @@ paths:
                 use_id:
                   type: boolean
                   default: true
-                is_sync:
-                  type: boolean
-                  default: false
         required: true
       responses:
         200:
