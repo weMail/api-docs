@@ -11,6 +11,7 @@ tags:
 - name: List
 - name: Subscriber
 - name: Tag
+- name: Campaign
 paths:
   /lists:
     get:
@@ -487,3 +488,35 @@ paths:
             'application/json':
               schema:
                 type: object
+  /campaigns:
+    get:
+      tags:
+        - Campaign
+      summary: List of completed standard campaign for last 3 months
+      parameters:
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                  url:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+        401:
+          description: Unauthorized
+          content: { }
