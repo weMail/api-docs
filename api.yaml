@@ -372,64 +372,6 @@ paths:
           description: Unauthorized
           content: { }
       x-codegen-request-body-name: body
-    patch:
-      tags:
-        - Subscriber
-      summary: Remove tags from a list subscriber. 'use_id = false', you can provide tag name.
-      parameters:
-        - name: list_id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: The unique ID for the list.
-
-        - name: subscriber_id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: The MD5 hash of the lowercase version of the list subscriber's email address.
-
-        - name: X-API-KEY
-          in: header
-          required: true
-          schema:
-            type: string
-
-      requestBody:
-        content:
-          'application/json':
-            schema:
-              required:
-                - tags
-              type: object
-              properties:
-                tags:
-                  type: array
-                  items:
-                    type: string
-                    description: Tag UUID or name
-                use_id:
-                  type: boolean
-                  default: true
-        required: true
-      responses:
-        200:
-          description: OK
-          content:
-            'application/json':
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-
-        403:
-          description: Unauthorized
-          content: { }
-      x-codegen-request-body-name: body
-
   /lists/{list_id}/tags:
     get:
       tags:
