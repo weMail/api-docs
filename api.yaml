@@ -11,6 +11,7 @@ tags:
 - name: List
 - name: Subscriber
 - name: Tag
+- name: Campaign
 paths:
   /lists:
     get:
@@ -50,6 +51,120 @@ paths:
         401:
           description: Unauthorized
           content: {}
+  /lists/{list_id}/subscribers/{subscriber_id}:
+    get:
+      tags:
+      - Subscriber
+      summary: Subscriber info of a list
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: subscriber_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-API-KEY
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      email:
+                        type: string
+                      mobile:
+                        type: string
+                      phone:
+                        type: string
+                      address1:
+                        type: string
+                      address2:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      country:
+                        type: string
+                      date_of_birth:
+                        type: string
+                        format: date
+                      timezone:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                  pivot:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                      action_at:
+                        type: string
+                        format: date-time
+        401:
+          description: Unauthorized
+          content: {}
+    delete:
+      tags:
+      - Subscriber
+      summary: Remove a subscriber from a list
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: subscriber_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-API-KEY
+        in: header
+        required: true
+        schema:
+          type: string
+
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                message:
+                 type: string
+        403:
+          description: Unauthorized
+          content: { }
+        x-codegen-request-body-name: body
+
+
   /lists/{list_id}/subscribers:
     post:
       tags:
@@ -148,42 +263,7 @@ paths:
           content: {}
       x-codegen-request-body-name: body
 
-  /lists/{list_id}/subscribers/{subscriber_id}:
-    delete:
-      tags:
-        - Subscriber
-      summary: Remove a subscriber from a list
-      parameters:
-        - name: list_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: subscriber_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: X-API-KEY
-          in: header
-          required: true
-          schema:
-            type: string
 
-      responses:
-        200:
-          description: OK
-          content:
-            'application/json':
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-        403:
-          description: Unauthorized
-          content: { }
-      x-codegen-request-body-name: body
   /lists/{list_id}/subscribers/{subscriber_id}/tags:
     get:
       tags:
@@ -430,3 +510,35 @@ paths:
             'application/json':
               schema:
                 type: object
+  /campaigns:
+    get:
+      tags:
+        - Campaign
+      summary: List of completed standard campaign for last 3 months
+      parameters:
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                  url:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+        401:
+          description: Unauthorized
+          content: { }
