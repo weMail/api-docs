@@ -6,28 +6,29 @@ info:
     email: support@getwemail.io
   version: 1.0.0
 servers:
-- url: https://api.getwemail.io/api/v1
+  - url: https://api.getwemail.io/api/v1
 tags:
-- name: List
-- name: Subscriber
-- name: Tag
+  - name: List
+  - name: Subscriber
+  - name: Tag
+  - name: Campaign
 paths:
   /lists:
     get:
       tags:
-      - List
+        - List
       summary: List of list
       parameters:
-      - name: X-API-KEY
-        in: header
-        required: true
-        schema:
-          type: string
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: OK
           content:
-            '*/*':
+            'application/json':
               schema:
                 type: object
                 properties:
@@ -50,28 +51,142 @@ paths:
         401:
           description: Unauthorized
           content: {}
+  /lists/{list_id}/subscribers/{subscriber_id}:
+    get:
+      tags:
+        - Subscriber
+      summary: Subscriber info of a list
+      parameters:
+        - name: list_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subscriber_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      email:
+                        type: string
+                      mobile:
+                        type: string
+                      phone:
+                        type: string
+                      address1:
+                        type: string
+                      address2:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      country:
+                        type: string
+                      date_of_birth:
+                        type: string
+                        format: date
+                      timezone:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                  pivot:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                      action_at:
+                        type: string
+                        format: date-time
+        401:
+          description: Unauthorized
+          content: {}
+    delete:
+      tags:
+        - Subscriber
+      summary: Remove a subscriber from a list
+      parameters:
+        - name: list_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subscriber_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                message:
+                  type: string
+        403:
+          description: Unauthorized
+          content: { }
+        x-codegen-request-body-name: body
+
+
   /lists/{list_id}/subscribers:
     post:
       tags:
-      - Subscriber
+        - Subscriber
       summary: Create a subscriber
       parameters:
-      - name: list_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: X-API-KEY
-        in: header
-        required: true
-        schema:
-          type: string
+        - name: list_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
-          '*/*':
+          'application/json':
             schema:
               required:
-              - email
+                - email
               type: object
               properties:
                 first_name:
@@ -105,7 +220,7 @@ paths:
         200:
           description: OK
           content:
-            '*/*':
+            'application/json':
               schema:
                 type: object
                 properties:
@@ -148,22 +263,27 @@ paths:
           content: {}
       x-codegen-request-body-name: body
 
-  /lists/{list_id}/subscribers/{subscriber_id}:
-    delete:
+
+  /lists/{list_id}/subscribers/{subscriber_id}/tags:
+    get:
       tags:
         - Subscriber
-      summary: Remove a subscriber from a list
+      summary: Get the tags on a list subscriber.
       parameters:
         - name: list_id
           in: path
           required: true
           schema:
             type: string
+          description: The unique ID for the list.
+
         - name: subscriber_id
           in: path
           required: true
           schema:
             type: string
+          description: The MD5 hash of the lowercase version of the list subscriber's email address.
+
         - name: X-API-KEY
           in: header
           required: true
@@ -174,12 +294,137 @@ paths:
         200:
           description: OK
           content:
-            '*/*':
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+
+        403:
+          description: Unauthorized
+          content: { }
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - Subscriber
+      summary: Add or remove tags from a list subscriber. If a tag that does not exist is passed in and set 'use_id = false', a new tag will be created.
+      parameters:
+        - name: list_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique ID for the list.
+
+        - name: subscriber_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The MD5 hash of the lowercase version of the list subscriber's email address.
+
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              required:
+                - tags
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+                    description: Tag UUID or name
+                use_id:
+                  type: boolean
+                  default: true
+                is_sync:
+                  type: boolean
+                  default: false
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
               schema:
                 type: object
                 properties:
                   message:
                     type: string
+
+        403:
+          description: Unauthorized
+          content: { }
+      x-codegen-request-body-name: body
+    patch:
+      tags:
+        - Subscriber
+      summary: Remove tags from a list subscriber. 'use_id = false', you can provide tag name.
+      parameters:
+        - name: list_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique ID for the list.
+
+        - name: subscriber_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The MD5 hash of the lowercase version of the list subscriber's email address.
+
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              required:
+                - tags
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+                    description: Tag UUID or name
+                use_id:
+                  type: boolean
+                  default: true
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
         403:
           description: Unauthorized
           content: { }
@@ -188,20 +433,20 @@ paths:
   /lists/{list_id}/tags:
     get:
       tags:
-      - Tag
+        - Tag
       summary: Get tag
       parameters:
-      - name: list_id
-        in: path
-        description: Numeric id of the list.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: X-API-KEY
-        in: header
-        schema:
-          type: string
+        - name: list_id
+          in: path
+          description: Numeric id of the list.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-API-KEY
+          in: header
+          schema:
+            type: string
       responses:
         200:
           description: OK
@@ -217,26 +462,26 @@ paths:
                     type: string
     post:
       tags:
-      - Tag
+        - Tag
       summary: Create tag
       parameters:
-      - name: list_id
-        in: path
-        description: Numeric id of the list.
-        required: true
-        schema:
-          type: integer
-      - name: X-API-KEY
-        in: header
-        schema:
-          type: string
+        - name: list_id
+          in: path
+          description: Numeric id of the list.
+          required: true
+          schema:
+            type: integer
+        - name: X-API-KEY
+          in: header
+          schema:
+            type: string
       requestBody:
         description: Create a tag object
         content:
-          '*/*':
+          'application/json':
             schema:
               required:
-              - name
+                - name
               type: object
               properties:
                 name:
@@ -262,25 +507,25 @@ paths:
   /tags/{tag_id}:
     put:
       tags:
-      - Tag
+        - Tag
       summary: Update tag
       parameters:
-      - name: tag_id
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: X-API-KEY
-        in: header
-        schema:
-          type: string
+        - name: tag_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: X-API-KEY
+          in: header
+          schema:
+            type: string
       requestBody:
         description: Update a tag object
         content:
-          '*/*':
+          'application/json':
             schema:
               required:
-              - name
+                - name
               type: object
               properties:
                 name:
@@ -302,23 +547,55 @@ paths:
       x-codegen-request-body-name: body
     delete:
       tags:
-      - Tag
+        - Tag
       summary: Delete tag
       parameters:
-      - name: tag_id
-        in: path
-        description: Numeric id of the tag.
-        required: true
-        schema:
-          type: integer
-      - name: X-API-KEY
-        in: header
-        schema:
-          type: string
+        - name: tag_id
+          in: path
+          description: Numeric id of the tag.
+          required: true
+          schema:
+            type: integer
+        - name: X-API-KEY
+          in: header
+          schema:
+            type: string
       responses:
         200:
           description: OK
           content:
-            '*/*':
+            'application/json':
               schema:
                 type: object
+  /campaigns:
+    get:
+      tags:
+        - Campaign
+      summary: List of completed standard campaign for last 3 months
+      parameters:
+        - name: X-API-KEY
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                  url:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+        401:
+          description: Unauthorized
+          content: { }
